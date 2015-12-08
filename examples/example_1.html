@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Search List Test</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="service-list">
+    <h3><a href="#">Services Dashboard</a></h3>
+	<div id="users">
+		<div id="hacker-list">
+	  		<input class="search" placeholder="Search" />			
+		  <ul class="list">
+		    <li>
+		       <h3 class="name">Jonny</h3>
+		       <p class="city">Stockholm</p>
+		    </li>
+		    <li>
+		      <h3 class="name">Jonas</h3>
+		      <p class="city">Berlin</p>
+		    </li>
+		  </ul>
+		</div>
+     </div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="../dist/list.js"></script>
+
+	<SCRIPT TYPE="text/javascript">
+
+		$(function(){
+			var options = {
+			    valueNames: [ 'name', 'city' ]
+			};
+
+			var hackerList = new List('hacker-list', options);
+
+		})
+	</SCRIPT>	
+</body>
+</html>

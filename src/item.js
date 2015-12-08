@@ -2,6 +2,7 @@ module.exports = function(list) {
   return function(initValues, element, notCreate) {
     var item = this;
 
+    this.parentElm = null;
     this._values = {};
 
     this.found = false; // Show if list.searched == true and this.found == true
@@ -18,6 +19,8 @@ module.exports = function(list) {
         item.elm = element;
         var values = list.templater.get(item, initValues);
         item.values(values);
+        if(element.parentElement !== undefined)
+          item.parentElm = element.parentElement;        
       }
     };
     this.values = function(newValues, notCreate) {
@@ -39,10 +42,35 @@ module.exports = function(list) {
       list.templater.hide(item);
     };
     this.matching = function() {
-      return (
+
+      // var isSearchMatched = ( (!list.filtered && list.searched && ((item.found && $(item.parentElm).hasClass("found") || ($(item.elm).children("ul.found").length > 0))) ) || 
+      //     (!list.filtered && list.searched && (!item.found && $(item.parentElm).hasClass("first-level")) && ($(item.elm).children("ul.found").length > 0)  ) );
+      
+
+      return (          
+
         (list.filtered && list.searched && item.found && item.filtered) ||
         (list.filtered && !list.searched && item.filtered) ||
-        (!list.filtered && list.searched && item.found) ||
+
+        (!list.nestedSearch ? (!list.filtered && list.searched && item.found) :
+          (!list.filtered && list.searched && 
+            (
+              (item.found && ( $(item.parentElm).hasClass("found") || $(item.elm).hasClass("found")) || 
+              ($(item.elm).children("ul.found").length > 0) ) || (!item.found && ( $(item.parentElm).hasClass("show-all")) )
+            )
+          )
+        ) ||
+
+        // (!list.filtered && list.searched && item.found) ||
+        // (!list.filtered && list.searched && item.found && ( $(item.parentElm).hasClass("found") || $(item.elm).hasClass("found")) || ($(item.elm).children("ul.found").length > 0) ) ||
+
+        // (!list.filtered && list.searched && 
+        //   (
+        //     (item.found && ( $(item.parentElm).hasClass("found") || $(item.elm).hasClass("found")) || ($(item.elm).children("ul.found").length > 0) ) || 
+        //     (!item.found && ( $(item.parentElm).hasClass("show-all")) )
+        //   )
+        // )||
+
         (!list.filtered && !list.searched)
       );
     };

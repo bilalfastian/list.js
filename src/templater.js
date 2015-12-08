@@ -9,6 +9,15 @@ var Templater = function(list) {
       var nodes = list.list.childNodes,
         items = [];
 
+      if(list.nestedSearch){
+        nodes = (nodes ? nodes.length = 0 : []);
+        
+        for(var j = 0; j < list.list.length; j++){
+          for(var k=0; k < list.list[j].childNodes.length; k++)
+            nodes.push(list.list[j].childNodes[k]);        
+        }
+      }
+
       for (var i = 0, il = nodes.length; i < il; i++) {
         // Only textnodes have a data attribute
         if (nodes[i].data === undefined) {
@@ -69,26 +78,47 @@ var Templater = function(list) {
     return true;
   };
   this.remove = function(item) {
-    if (item.elm.parentNode === list.list) {
-      list.list.removeChild(item.elm);
+    if(list.nestedSearch){
+      if (item.elm.parentNode === list.list)
+        list.list.removeChild(item.elm);
     }
+    else
+      $(item.elm).remove();
   };
   this.show = function(item) {
     templater.create(item);
-    list.list.appendChild(item.elm);
+    if(!list.nestedSearch)
+      list.list.appendChild(item.elm);
+    else
+      $(item.parentElm).append(item.elm);
   };
   this.hide = function(item) {
-    if (item.elm !== undefined && item.elm.parentNode === list.list) {
-      list.list.removeChild(item.elm);
+    if (item.elm !== undefined) {      
+      if(!list.nestedSearch && item.elm.parentNode === list.list)
+          list.list.removeChild(item.elm);
+      else 
+        $(item.elm).remove();
     }
   };
   this.clear = function() {
     /* .innerHTML = ''; fucks up IE */
-    if (list.list.hasChildNodes()) {
-      while (list.list.childNodes.length >= 1)
-      {
-        list.list.removeChild(list.list.firstChild);
-      }
+
+    if(!list.nestedSearch){
+      if (list.list.hasChildNodes()) {
+        while (list.list.childNodes.length >= 1){
+          list.list.removeChild(list.list.firstChild);
+        }
+      }      
+    }else{
+      for (var i = 0; i < list.list.length; i++) {
+          var tmpList = list.list[i];
+
+          if (tmpList.hasChildNodes()) {
+            while (tmpList.childNodes.length >= 1){
+                tmpList.removeChild(tmpList.firstChild);
+            }
+          }
+      }          
     }
   };
 };

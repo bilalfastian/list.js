@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Search List Test</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+        <div class="service-list">
+
+			<div id="hacker-list">
+			<input type="text" class="search">
+			<br>List 1<br>
+			<table>
+			<tbody class="list">
+			    <tr><td class="mid">abc1</td><td>foo1</td><td>bar</td></tr>
+			    <tr><td class="mid">abc2</td><td>foo2</td><td>bar</td></tr>
+			</tbody>
+			</table>
+
+			<br>List 2<br>
+			<table>
+			<tbody class="list">
+			    <tr><td class="mid">abc1</td><td>foo1</td><td>bar</td></tr>
+			    <tr><td class="mid">abc2</td><td>foo2</td><td>bar</td></tr>
+			    <tr><td class="mid">abc3</td><td>foo3</td><td>bar</td></tr>
+			    <tr><td class="mid">abc4</td><td>foo4</td><td>bar</td></tr>
+			</tbody>
+			</table>
+
+			<br>List 3<br>
+			<table>
+			<tbody class="list">
+			    <tr><td class="mid">abc1</td><td>foo1</td><td>bar</td></tr>
+			    <tr><td class="mid">abc2</td><td>foo2</td><td>bar</td></tr>
+			    <tr><td class="mid">abc4</td><td>foo4</td><td>bar</td></tr>
+			</tbody>
+			</table>
+			</div>        	
+	     </div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="../dist/list.js"></script>
+
+	<SCRIPT TYPE="text/javascript">
+
+		$(function(){
+			  var options = {
+			    valueNames: [ 'mid'],
+			    nestedSearch: true
+			  };
+			  var hackerList = new List('hacker-list', options);
+
+		})
+	</SCRIPT>	
+</body>
+</html>

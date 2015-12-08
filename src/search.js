@@ -43,6 +43,11 @@ module.exports = function(list) {
   };
   var search = {
     list: function() {
+      //Clear found
+      for (var i = 0, il = list.items.length; i < il; i++) {
+          $(list.items[i].parentElm).removeClass("found").removeClass('show-all');
+      }
+
       for (var k = 0, kl = list.items.length; k < kl; k++) {
         search.item(list.items[k]);
       }
@@ -52,6 +57,11 @@ module.exports = function(list) {
       for (var j = 0, jl = columns.length; j < jl; j++) {
         if (search.values(item.values(), columns[j])) {
           item.found = true;
+          
+          if(list.nestedSearch){
+            $(item.elm).addClass('found').parents(".list").addClass("found");
+            $(item.elm).find('.list').addClass('show-all');            
+          }
           return;
         }
       }
