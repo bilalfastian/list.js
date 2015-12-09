@@ -28,6 +28,7 @@ var List = function(id, options, values) {
       self.visibleItems   = [];
       self.matchingItems  = [];
       self.searched       = false;
+      self.nestedSearch   = false;
       self.filtered       = false;
       self.handlers       = { 'updated': [] };
       self.plugins        = {};
@@ -41,7 +42,8 @@ var List = function(id, options, values) {
 
       self.listContainer = (typeof(id) === 'string') ? document.getElementById(id) : id;
       if (!self.listContainer) { return; }
-      self.list       = getByClass(self.listContainer, self.listClass, true);
+      self.list       = (self.nestedSearch ? getByClass(self.listContainer, self.listClass, false) : 
+                          getByClass(self.listContainer, self.listClass, true));
 
       self.parse      = require('./src/parse')(self);
       self.templater  = require('./src/templater')(self);
