@@ -43,8 +43,8 @@ var List = function(id, options, values) {
       self.listContainer = (typeof(id) === 'string') ? document.getElementById(id) : id;
       if (!self.listContainer) { return; }
       self.list       = (self.nestedSearch ? getByClass(self.listContainer, self.listClass, false) : 
-                          getByClass(self.listContainer, self.listClass, true));
-
+                          getByClass(self.listContainer, self.listClass, true));      
+      
       self.parse      = require('./src/parse')(self);
       self.templater  = require('./src/templater')(self);
       self.search     = require('./src/search')(self);
